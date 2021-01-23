@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import { useRecoilValue } from 'recoil';
+
+import { todoListState, todoListStatsState } from './Atoms/atomStates';
+import TodoItemCreator from './components/TodoItemCreator';
+import TodoItem from './components/TodoItem';
+import TodoListStats from './components/TodoListStats';
+import TodoListFilters from './components/TodoListFilters';
+import ReactWordcloud from 'react-wordcloud';
 
 function App() {
+  const todoList = useRecoilValue(todoListState);
+  const { wordCount } = useRecoilValue(todoListStatsState);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>TOdo</h1>
+      <TodoListStats />
+      <TodoListFilters />
+      <TodoItemCreator />
+      {todoList.map((todoItem) => (
+        <TodoItem key={todoItem.id} item={todoItem} />
+      ))}
+
+      <ReactWordcloud words={wordCount} />
     </div>
   );
 }
