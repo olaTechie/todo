@@ -10,7 +10,7 @@ import ReactWordcloud from 'react-wordcloud';
 
 function App() {
   const todoList = useRecoilValue(todoListState);
-  const { wordCount } = useRecoilValue(todoListStatsState);
+  const { wordCount, totalNum } = useRecoilValue(todoListStatsState);
 
   return (
     <div className="App">
@@ -22,7 +22,7 @@ function App() {
         <TodoItem key={todoItem.id} item={todoItem} />
       ))}
 
-      <ReactWordcloud words={wordCount} />
+      {!wordCount ? <h1> Loading </h1> : <ReactWordcloud words={wordCount} />}
     </div>
   );
 }

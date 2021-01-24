@@ -38,11 +38,13 @@ export const todoListStatsState = selector({
       totalNum === 0 ? 0 : (totalCompletedNum / totalNum) * 100;
     const text = todoList.map((item) => item.text);
     const all = text.join(' ');
-    const { wordsCount } = wordscount(all, true) || {};
-    let wordCount = Object.keys(wordsCount).map((key) => ({
-      text: key,
-      value: wordsCount[key],
-    }));
+    const { wordsCount } = totalNum >= 1 && wordscount(all, true);
+    let wordCount =
+      totalNum >= 1 &&
+      Object.keys(wordsCount).map((key) => ({
+        text: key,
+        value: wordsCount[key],
+      }));
 
     return {
       wordCount,
